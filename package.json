@@ -1,0 +1,28 @@
+{
+  "name": "nandana-paint-house",
+  "version": "1.0.0",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\" \"wait-on http://localhost:5173 && npm run electron\"",
+    "server": "node backend/server.js",
+    "client": "npm --prefix frontend run dev",
+    "electron": "electron electron/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tash2001/Nandana-Paint-House.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tash2001/Nandana-Paint-House/issues"
+  },
+  "homepage": "https://github.com/Tash2001/Nandana-Paint-House#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "electron": "^36.4.0",
+    "wait-on": "^8.0.3"
+  }
+}
