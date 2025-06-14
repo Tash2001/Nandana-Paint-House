@@ -5,6 +5,102 @@ const dbPath = path.join(__dirname, 'data', 'paintshop.db');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) return console.error('DB Connect Error:', err.message);
   console.log('Connected to SQLite database.');
+
+});
+
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS categories(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
+    );
+    `);
+
+  // Products Table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS products (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      category_id INTEGER,
+      purchase_price REAL NOT NULL,
+      selling_price REAL NOT NULL,
+      quantity INTEGER NOT NULL DEFAULT 0,
+      unit TEXT DEFAULT 'pcs',
+      FOREIGN KEY (category_id) REFERENCES categories(id)
+    );
+  `);
+
+  // Customers Table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS customers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      phone TEXT
+    );
+  `);
+
+  // Bills Table // bill id , date,  
+  db.run(`
+    CREATE TABLE IF NOT EXISTS bills (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      customer_id INTEGER,
+      date TEXT NOT NULL,
+      total_amount REAL NOT NULL,
+      discount REAL DEFAULT 0,
+      net_amount REAL NOT NULL,
+      FOREIGN KEY (customer_id) REFERENCES customers(id)
+    );
+  `);
+
+
+  // Bill Items Table
+  db.run(`
+  CREATE TABLE IF NOT EXISTS bill_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bill_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    price REAL NOT NULL,
+    item_discount REAL DEFAULT 0, -- Per item discount
+    total REAL NOT NULL,
+    FOREIGN KEY (bill_id) REFERENCES bills(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+  );
+`);
+
+  // Suppliers Table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS suppliers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      phone TEXT
+    );
+  `);
+
+  // Purchases Table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS purchases (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      supplier_id INTEGER,
+      date TEXT NOT NULL,
+      total_amount REAL NOT NULL,
+      FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+    );
+  `);
+
+  // Purchase Items Table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS purchase_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      purchase_id INTEGER NOT NULL,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER NOT NULL,
+      price REAL NOT NULL,
+      total REAL NOT NULL,
+      FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+      FOREIGN KEY (product_id) REFERENCES products(id)
+    );
+  `);
 });
 
 module.exports = db;
