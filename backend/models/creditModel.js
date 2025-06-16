@@ -1,5 +1,5 @@
 // models/creditModel.js
-const db = require('./db');
+const db = require('../db');
 
 const addCreditCustomer = (data, callback) => {
     const { name, phone, bill_id, total_credit } = data;

@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const { deflate } = require('zlib');
 
 const dbPath = path.join(__dirname, 'data', 'paintshop.db');
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -9,12 +10,21 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 db.serialize(() => {
+
+  //INVENTORY  PART
+
+  //Supplier Table
   db.run(`
-    CREATE TABLE IF NOT EXISTS categories(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE
-    );
-    `);
+    CREATE TABLE IF NOT EXISTS suppliers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL ,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+
+    );`)
+
+
+  
 
   // Products Table
   db.run(`
@@ -38,7 +48,7 @@ db.serialize(() => {
     date TEXT DEFAULT (datetime('now', 'localtime')),
     total_net_amount REAL NOT NULL,
     discount REAL DEFAULT 0,
-    total_payable_value REAL NOT NULL,
+    total_payable_value REAL NOT NULL
   );
 `);
 
@@ -85,14 +95,7 @@ db.serialize(() => {
   );
 `);
 
-  // Suppliers Table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS suppliers (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      phone TEXT
-    );
-  `);
+ 
 
   // Purchases Table
   db.run(`
