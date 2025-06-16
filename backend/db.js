@@ -30,30 +30,19 @@ db.serialize(() => {
     );
   `);
 
-  // Customers Table
+
+
   db.run(`
-    CREATE TABLE IF NOT EXISTS customers (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      phone TEXT
-    );
-  `);
+  CREATE TABLE IF NOT EXISTS bills (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT DEFAULT (datetime('now', 'localtime')),
+    total_net_amount REAL NOT NULL,
+    discount REAL DEFAULT 0,
+    total_payable_value REAL NOT NULL,
+  );
+`);
 
-  // Bills Table // bill id , date,  
-  db.run(`
-    CREATE TABLE IF NOT EXISTS bills (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      customer_id INTEGER,
-      date TEXT NOT NULL,
-      total_amount REAL NOT NULL,
-      discount REAL DEFAULT 0,
-      net_amount REAL NOT NULL,
-      FOREIGN KEY (customer_id) REFERENCES customers(id)
-    );
-  `);
-
-
-  // Bill Items Table
+  // Create bill_items table
   db.run(`
   CREATE TABLE IF NOT EXISTS bill_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,10 +50,38 @@ db.serialize(() => {
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
     price REAL NOT NULL,
-    item_discount REAL DEFAULT 0, -- Per item discount
+    item_discount REAL DEFAULT 0,
     total REAL NOT NULL,
     FOREIGN KEY (bill_id) REFERENCES bills(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
+  );
+`);
+
+  //credit customers
+  db.run(`
+  CREATE TABLE IF NOT EXISTS credit_customers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    phone TEXT,
+    bill_id INTEGER NOT NULL,
+    total_credit REAL NOT NULL,
+    amount_paid REAL DEFAULT 0,
+    remaining_balance AS (total_credit - amount_paid) STORED,
+    status TEXT DEFAULT 'unpaid',
+    last_paid_date TEXT,
+    created_at TEXT DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (bill_id) REFERENCES bills(id)
+  );
+`);
+
+  //credit custormers payment traking
+  db.run(`
+  CREATE TABLE IF NOT EXISTS credit_payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    credit_customer_id INTEGER NOT NULL,
+    amount_paid REAL NOT NULL,
+    paid_at TEXT DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (credit_customer_id) REFERENCES credit_customers(id)
   );
 `);
 
