@@ -38,7 +38,7 @@ db.serialize(() => {
     date TEXT DEFAULT (datetime('now', 'localtime')),
     total_net_amount REAL NOT NULL,
     discount REAL DEFAULT 0,
-    total_payable_value REAL NOT NULL,
+    total_payable_value REAL NOT NULL
   );
 `);
 
@@ -52,8 +52,8 @@ db.serialize(() => {
     price REAL NOT NULL,
     item_discount REAL DEFAULT 0,
     total REAL NOT NULL,
-    FOREIGN KEY (bill_id) REFERENCES bills(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (bill_id) REFERENCES bills(id)
+    -- FOREIGN KEY (product_id) REFERENCES products(id)
   );
 `);
 

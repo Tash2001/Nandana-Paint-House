@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/bill', billRoutes);
-app.use('/api/inventory', inventoryRoutes);
-app.use('/api/credit', creditRouter)
+// app.use('/api/inventory', inventoryRoutes);
+app.use('/api/credit', creditRouter);
 
 const PORT = 3001;
 app.listen(PORT, () => console.log(` Backend running on http://localhost:${PORT}`));
