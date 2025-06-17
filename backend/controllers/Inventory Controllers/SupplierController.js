@@ -1,4 +1,4 @@
-const { insertSupplier, fetchSuppliers } = require("../../services/Inventory Services/SupplierService");
+const { insertSupplier, fetchSuppliers, updateSupplierService, deleteSupplierS } = require("../../services/Inventory Services/SupplierService");
 
 
 
@@ -32,4 +32,35 @@ async function getSuppliers(req,res) {
     }
 }
 
-module.exports = {addSupplier, getSuppliers};
+async function updateSupplier(req, res) {
+    const {id} = req.params;
+    const {name} = req.body;
+
+    console.log("id: ", id);
+    console.log("name: ", name);
+
+    if(!name || name.trim() === '') {
+        return res.status(400).json({error: 'Supplier name is required'});
+    }
+
+
+    try {
+        const result = await updateSupplierService(id, name.trim());
+        res.status(200).json({message:"Supplier updated : ", result})
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+async function deleteSupplier (req, res) {
+    const {id} = req.params;
+
+    try {
+        await deleteSupplierS(id);
+        res.status(200).json({message: "Supplier Deleted"});
+    } catch (error) {
+        res.status(500).json({error:error.message});
+    }
+}
+
+module.exports = {addSupplier, getSuppliers, updateSupplier, deleteSupplier};

@@ -1,11 +1,11 @@
 const db = require('../../db.js')
 
 //creating new supplier
- function insertSupplier(name) {
+ function insertCategoryS(name) {
     const createdAt = new Date().toISOString();
 
     const sql = `
-        INSERT INTO suppliers (name,created_at, updated_at)
+        INSERT INTO categories (name,created_at, updated_at)
         VALUES (?, ?, ?)
     `;
 
@@ -19,8 +19,8 @@ const db = require('../../db.js')
 
 
 //Get all Suppliers
-function fetchSuppliers() {
-    const sql = `SELECT * FROM suppliers`;
+function fetchCategoriesS() {
+    const sql = `SELECT * FROM categories`;
     return new Promise((resolve,reject) => {
         db.all(sql, [],(err,rows) => {
             if(err) return reject(err);
@@ -30,17 +30,17 @@ function fetchSuppliers() {
 }
 
 //update supplier
-function updateSupplierService(id, name) {
+function updateCategoryS(id, name) {
     const updateAt = new Date().toISOString();
     const sql = `
-        UPDATE suppliers
+        UPDATE categories
         SET name = ?, updated_at =? WHERE id = ?
     `;
 
     return new Promise ((resolve, reject) => {
         db.run(sql, [name, updateAt, id], function (err) {
             if (err) return reject(err);
-            if (this.changes === 0) return reject (new Error ('Supplier not found'));
+            if (this.changes === 0) return reject (new Error ('Category not found'));
             resolve ({id,name});
         });
     });
@@ -48,19 +48,19 @@ function updateSupplierService(id, name) {
 }
 
 
-function deleteSupplierS(id) {
-    const sql = `DELETE FROM suppliers WHERE id = ?`;
+function deleteCategoryS(id) {
+    const sql = `DELETE FROM categories WHERE id = ?`;
 
     return new Promise ((resolve, reject) => {
         db.run(sql, [id], function (err) {
             if(err) return reject(err);
-            if (this.changes === 0) return reject(new Error('Supplier not found'));
-            resolve({message: 'Supplier Deleted Succesfully'});
+            if (this.changes === 0) return reject(new Error('Category not found'));
+            resolve({message: 'Category Deleted Succesfully'});
         });
     });
 }
 
 module.exports = {
-    insertSupplier, fetchSuppliers, updateSupplierService, deleteSupplierS
+    insertCategoryS, fetchCategoriesS, updateCategoryS, deleteCategoryS
 };
 

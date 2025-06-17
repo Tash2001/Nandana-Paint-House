@@ -1,11 +1,11 @@
 const db = require('../../db.js')
 
-//creating new supplier
- function insertSupplier(name) {
+//creating new brand
+ function insertBrandsS(name) {
     const createdAt = new Date().toISOString();
 
     const sql = `
-        INSERT INTO suppliers (name,created_at, updated_at)
+        INSERT INTO brands (name,created_at, updated_at)
         VALUES (?, ?, ?)
     `;
 
@@ -18,9 +18,9 @@ const db = require('../../db.js')
 }
 
 
-//Get all Suppliers
-function fetchSuppliers() {
-    const sql = `SELECT * FROM suppliers`;
+//Get all brands
+function fetchBrandsS() {
+    const sql = `SELECT * FROM brands`;
     return new Promise((resolve,reject) => {
         db.all(sql, [],(err,rows) => {
             if(err) return reject(err);
@@ -29,18 +29,18 @@ function fetchSuppliers() {
     });
 }
 
-//update supplier
-function updateSupplierService(id, name) {
+//update brands
+function updateBrandS(id, name) {
     const updateAt = new Date().toISOString();
     const sql = `
-        UPDATE suppliers
+        UPDATE brands
         SET name = ?, updated_at =? WHERE id = ?
     `;
 
     return new Promise ((resolve, reject) => {
         db.run(sql, [name, updateAt, id], function (err) {
             if (err) return reject(err);
-            if (this.changes === 0) return reject (new Error ('Supplier not found'));
+            if (this.changes === 0) return reject (new Error ('Brand not found'));
             resolve ({id,name});
         });
     });
@@ -48,19 +48,19 @@ function updateSupplierService(id, name) {
 }
 
 
-function deleteSupplierS(id) {
-    const sql = `DELETE FROM suppliers WHERE id = ?`;
+function deleteBranS(id) {
+    const sql = `DELETE FROM brands WHERE id = ?`;
 
     return new Promise ((resolve, reject) => {
         db.run(sql, [id], function (err) {
             if(err) return reject(err);
-            if (this.changes === 0) return reject(new Error('Supplier not found'));
-            resolve({message: 'Supplier Deleted Succesfully'});
+            if (this.changes === 0) return reject(new Error('Brand not found'));
+            resolve({message: 'Brand Deleted Succesfully'});
         });
     });
 }
 
 module.exports = {
-    insertSupplier, fetchSuppliers, updateSupplierService, deleteSupplierS
+    insertBrandsS, fetchBrandsS, updateBrandS, deleteBranS
 };
 
