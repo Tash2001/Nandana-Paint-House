@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/bill', billRoutes);
-// app.use('/api/inventory', inventoryRoutes);
+app.use('/api/inventory', inventoryRoutes);
 app.use('/api/credit', creditRouter);
 
 const PORT = 3001;
