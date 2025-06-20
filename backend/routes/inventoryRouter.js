@@ -33,4 +33,11 @@ router.get("/sub-category", getSCategory);
 router.put("/sub-category/:id", updateSCategory);
 router.delete("/sub-category/:id", deleteSCategory)
 
+
+//color-routers
+router.post("/color", addCategories);
+router.get("/color", getCategory);
+router.put("/color/:id", updateCategory);
+router.delete("/color/:id", deleteCategory)
+
 module.exports = router;

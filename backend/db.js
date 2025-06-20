@@ -1,16 +1,14 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const { deflate } = require('zlib');
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+const { deflate } = require("zlib");
 
-const dbPath = path.join(__dirname, 'data', 'paintshop.db');
+const dbPath = path.join(__dirname, "data", "paintshop.db");
 const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) return console.error('DB Connect Error:', err.message);
-  console.log('Connected to SQLite database.');
-
+  if (err) return console.error("DB Connect Error:", err.message);
+  console.log("Connected to SQLite database.");
 });
 
 db.serialize(() => {
-
   //INVENTORY  PART
 
   //Supplier Table
@@ -21,42 +19,50 @@ db.serialize(() => {
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 
-    );`)
+    );`);
 
-
-    //brands tables
-    db.run(`
+  //brands tables
+  db.run(`
     CREATE TABLE IF NOT EXISTS brands (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL ,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 
-    );`)
+    );`);
 
-    //categories tables
-    db.run(`
+  //categories tables
+  db.run(`
     CREATE TABLE IF NOT EXISTS categories (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL ,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 
-    );`)
+    );`);
 
-
-    //subcategory tables
-    db.run(`
+  //subcategory tables
+  db.run(`
     CREATE TABLE IF NOT EXISTS subCategories (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL ,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 
-    );`)
+    );`);
 
-
-  
+  //color table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS colors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    brand_id INTEGER NOT NULL,
+    full_name TEXT NOT NULL,
+    created_at TEXT,
+    updated_at TEXT,
+    FOREIGN KEY (brand_id) REFERENCES brands(id)
+);
+`);
 
   // Products Table
   db.run(`
@@ -71,8 +77,6 @@ db.serialize(() => {
       FOREIGN KEY (category_id) REFERENCES categories(id)
     );
   `);
-
-
 
   db.run(`
   CREATE TABLE IF NOT EXISTS bills (
@@ -126,8 +130,6 @@ db.serialize(() => {
     FOREIGN KEY (credit_customer_id) REFERENCES credit_customers(id)
   );
 `);
-
- 
 
   // Purchases Table
   db.run(`
