@@ -4,6 +4,8 @@ const { addBrand, getBrand, updateBrands, deleteBrand } = require("../controller
 const { addCategories, getCategory, updateCategory, deleteCategory } = require("../controllers/Inventory Controllers/CategoriesController");
 const { addSCategories, getSCategory, updateSCategory, deleteSCategory } = require("../controllers/Inventory Controllers/SubCategoryController");
 const { createColor, getColors, updateColor, deleteColor } = require("../controllers/Inventory Controllers/ColorController");
+const { addUnit, getUnits, updateUnit, deleteUnit } = require("../controllers/Inventory Controllers/UnitsController");
+
 
 const router = express.Router();
 
@@ -40,5 +42,13 @@ router.post("/colors", createColor);
 router.get("/colors", getColors);
 router.put("/colors/:id", updateColor);
 router.delete("/colors/:id", deleteColor)
+
+
+// units routes
+router.post("/units", addUnit);
+router.get("/units", getUnits);
+router.put("/units/:id", updateUnit);
+router.delete("/units/:id", deleteUnit);
+
 
 module.exports = router;
