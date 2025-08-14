@@ -64,19 +64,6 @@ db.serialize(() => {
 );
 `);
 
-  // Products Table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS products (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      category_id INTEGER,
-      purchase_price REAL NOT NULL,
-      selling_price REAL NOT NULL,
-      quantity INTEGER NOT NULL DEFAULT 0,
-      unit TEXT DEFAULT 'pcs',
-      FOREIGN KEY (category_id) REFERENCES categories(id)
-    );
-  `);
 
   //unit table
   db.run(`
@@ -87,6 +74,32 @@ db.serialize(() => {
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP
   );
     `);
+
+    // Products Table
+db.run(`
+    CREATE TABLE IF NOT EXISTS products (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        brand_id INTEGER NOT NULL,
+        supplier_id INTEGER NOT NULL,
+        category_id INTEGER NOT NULL,
+        subcategory_id INTEGER NOT NULL,
+        unit_id INTEGER NOT NULL,
+        color_id INTEGER,
+        purchase_price REAL NOT NULL,
+        selling_price REAL NOT NULL,
+        description TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (brand_id) REFERENCES brands(id),
+        FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
+        FOREIGN KEY (category_id) REFERENCES categories(id),
+        FOREIGN KEY (subcategory_id) REFERENCES subcategories(id),
+        FOREIGN KEY (unit_id) REFERENCES units(id),
+        FOREIGN KEY (color_id) REFERENCES colors(id)
+    );
+`);
+
 
   db.run(`
   CREATE TABLE IF NOT EXISTS bills (
