@@ -6,7 +6,7 @@ function insertProductS(product) {
     const sql = `
         INSERT INTO products 
         (name, brand_id, supplier_id, category_id, subcategory_id, unit_id, color_id, purchase_price, selling_price, description, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     return new Promise((resolve, reject) => {
         db.run(sql, [
