@@ -101,6 +101,19 @@ db.run(`
 `);
 
 
+//stock table
+db.run(`
+    CREATE TABLE IF NOT EXISTS stock (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER UNIQUE NOT NULL,
+        quantity INTEGER NOT NULL DEFAULT 0,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (product_id) REFERENCES products(id)
+    );
+`);
+
+
+
   db.run(`
   CREATE TABLE IF NOT EXISTS bills (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
