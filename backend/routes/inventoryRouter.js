@@ -7,6 +7,9 @@ const { createColor, getColors, updateColor, deleteColor } = require("../control
 const { addUnit, getUnits, updateUnit, deleteUnit } = require("../controllers/Inventory Controllers/UnitsController");
 const { addProduct, getProducts, updateProduct, deleteProduct } = require("../controllers/Inventory Controllers/ProductsController");
 const { addStock, getStock, getStockByProduct, updateStock, deleteStock } = require("../controllers/Inventory Controllers/StockController");
+const { buyProduct, sellProduct, getTransactions, getTransactionsByProduct } = require("../controllers/Inventory Controllers/TransactionController");
+
+
 
 
 const router = express.Router();
@@ -67,6 +70,13 @@ router.get("/stock", getStock);
 router.get("/stock/:productId", getStockByProduct);     
 router.put("/stock/:productId", updateStock);           
 router.delete("/stock/:productId", deleteStock);
+
+
+//transaction router
+router.post("/transactions/buy", buyProduct);
+router.post("/transactions/sell", sellProduct);
+router.get("/transactions", getTransactions);
+router.get("/transactions/:productId", getTransactionsByProduct);
 
 
 module.exports = router;

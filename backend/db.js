@@ -113,6 +113,19 @@ db.run(`
 `);
 
 
+//tranaction table
+db.run(`
+  CREATE TABLE IF NOT EXISTS transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('BUY', 'SELL')),
+    quantity INTEGER NOT NULL,
+    transaction_date TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+  `);
+
 
   db.run(`
   CREATE TABLE IF NOT EXISTS bills (
