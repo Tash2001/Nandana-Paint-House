@@ -1,5 +1,5 @@
 // controllers/billController.js
-const { createNewBill } = require('../services/billService');
+const { createNewBill, getBillById } = require('../services/billService');
 
 const createBills = (req, res) => {
     const { bill, items } = req.body;
@@ -15,6 +15,23 @@ const createBills = (req, res) => {
     });
 };
 
-module.exports = { createBills };
+const printBill = async (req, res) => {
+    try {
+
+        const billId = req.params.billId;
+        console.log('billId - ' + billId);
+        const bill = await getBillById(billId);
+
+        if (!bill) {
+            return res.status(404).json({ success: false, message: "Bill not found" });
+        }
+
+        // You can send JSON for frontend printing or raw HTML/PDF
+        res.json({ success: true, bill });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+module.exports = { createBills, printBill };
 
 
