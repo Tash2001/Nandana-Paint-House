@@ -43,7 +43,7 @@ const getBill = async (billId) => {
       if (err) reject(err);
       if (!row) return resolve(null);
 
-      db.all(`Select * FROM bill_items WHERE bill_id =?`, [billId], (err, itemrow) => {
+      db.all(`Select bi.id as bill_item_id,bi.quantity ,bi.item_discount , bi.total,p.selling_price, p.id as product_id,p.name as product_name FROM bill_items bi JOIN products p ON bi.product_id = p.id WHERE bill_id =? `, [billId], (err, itemrow) => {
         if (err) return reject(err);
 
         row.items = itemrow;

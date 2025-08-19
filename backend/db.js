@@ -75,8 +75,8 @@ db.serialize(() => {
   );
     `);
 
-    // Products Table
-db.run(`
+  // Products Table
+  db.run(`
     CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
@@ -101,8 +101,8 @@ db.run(`
 `);
 
 
-//stock table
-db.run(`
+  //stock table
+  db.run(`
     CREATE TABLE IF NOT EXISTS stock (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         product_id INTEGER UNIQUE NOT NULL,
@@ -113,8 +113,8 @@ db.run(`
 `);
 
 
-//tranaction table
-db.run(`
+  //tranaction table
+  db.run(`
   CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     product_id INTEGER NOT NULL,
@@ -144,11 +144,10 @@ db.run(`
     bill_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    price REAL NOT NULL,
     item_discount REAL DEFAULT 0,
     total REAL NOT NULL,
-    FOREIGN KEY (bill_id) REFERENCES bills(id)
-    -- FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (bill_id) REFERENCES bills(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
   );
 `);
 
