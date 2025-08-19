@@ -1,0 +1,82 @@
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sidebar-btn {
+  background: none;
+  border: none;
+  color: #e5e5e5;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.sidebar-btn:hover {
+  background-color: #2a2a2a;
+}
+
+/* Main submenu container */
+.sidebar-submenu {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem; /* small indent for all submenu items */
+}
+
+/* Submenu buttons like Parameter Tables or Inventory buttons */
+.sidebar-submenu-btn {
+  background: none;
+  border: none;
+  color: #cfcfcf;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-size: 0.95rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.sidebar-submenu-btn:hover {
+  color: #ffffff;
+  background-color: #2a2a2a;
+}
+
+/* Nested submenu (Parameter Tables) */
+.sidebar-submenu-nested {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.2rem; /* extra indent for nested */
+}
+
+.sidebar-submenu-nested button {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.5rem;
+  background: none;
+  border: none;
+  color: #cfcfcf;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.2s, background 0.2s;
+}
+
+.sidebar-submenu-nested button:hover {
+  color: #ffffff;
+  background-color: #2a2a2a;
+}

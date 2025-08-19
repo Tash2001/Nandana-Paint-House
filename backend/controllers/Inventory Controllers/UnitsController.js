@@ -16,6 +16,7 @@ async function addUnit(req, res) {
 
 // Get all units
 async function getUnits(req, res) {
+    console.log("GET /units called");
     try {
         const units = await fetchUnitsS();
         res.status(200).json(units);

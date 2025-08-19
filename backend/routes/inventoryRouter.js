@@ -5,6 +5,11 @@ const { addCategories, getCategory, updateCategory, deleteCategory } = require("
 const { addSCategories, getSCategory, updateSCategory, deleteSCategory } = require("../controllers/Inventory Controllers/SubCategoryController");
 const { createColor, getColors, updateColor, deleteColor } = require("../controllers/Inventory Controllers/ColorController");
 const { addUnit, getUnits, updateUnit, deleteUnit } = require("../controllers/Inventory Controllers/UnitsController");
+const { addProduct, getProducts, updateProduct, deleteProduct } = require("../controllers/Inventory Controllers/ProductsController");
+const { addStock, getStock, getStockByProduct, updateStock, deleteStock } = require("../controllers/Inventory Controllers/StockController");
+const { buyProduct, sellProduct, getTransactions, getTransactionsByProduct } = require("../controllers/Inventory Controllers/TransactionController");
+
+
 
 
 const router = express.Router();
@@ -49,6 +54,29 @@ router.post("/units", addUnit);
 router.get("/units", getUnits);
 router.put("/units/:id", updateUnit);
 router.delete("/units/:id", deleteUnit);
+
+
+
+// Products routes
+router.post("/products", addProduct);
+router.get("/products", getProducts);
+router.put("/products/:id", updateProduct);
+router.delete("/products/:id", deleteProduct);
+
+
+//Stock routes
+router.post("/stock", addStock);                       
+router.get("/stock", getStock);                        
+router.get("/stock/:productId", getStockByProduct);     
+router.put("/stock/:productId", updateStock);           
+router.delete("/stock/:productId", deleteStock);
+
+
+//transaction router
+router.post("/transactions/buy", buyProduct);
+router.post("/transactions/sell", sellProduct);
+router.get("/transactions", getTransactions);
+router.get("/transactions/:productId", getTransactionsByProduct);
 
 
 module.exports = router;

@@ -43,6 +43,8 @@ function getAllColors() {
     JOIN brands b ON c.brand_id = b.id
   `;
 
+  console.log("Units Service: ", sql)
+
   return new Promise ((resolve,reject) => {
     db.all(sql, [], (err,rows) => {
       if (err) return reject(err);
