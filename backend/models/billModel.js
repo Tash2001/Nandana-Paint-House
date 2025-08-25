@@ -37,4 +37,19 @@ const createBill = (billData, items, callback) => {
   });
 };
 
-module.exports = { createBill };
+const getBill = async (billId) => {
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM bills WHERE id = ?`, [billId], (err, row) => {
+      if (err) reject(err);
+      if (!row) return resolve(null);
+
+      db.all(`Select bi.id as bill_item_id,bi.quantity ,bi.item_discount , bi.total,p.selling_price, p.id as product_id,p.name as product_name FROM bill_items bi JOIN products p ON bi.product_id = p.id WHERE bill_id =? `, [billId], (err, itemrow) => {
+        if (err) return reject(err);
+
+        row.items = itemrow;
+        resolve(row);
+      })
+    });
+  });
+};
+module.exports = { createBill, getBill };
