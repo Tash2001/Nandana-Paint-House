@@ -1,0 +1,14 @@
+/* Bootstrap + DataTables base imports */
+@import url("libs/bootstrap.min.css");
+@import url("libs/datatables.min.css");
+
+/* Your custom overrides */
+body {
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
