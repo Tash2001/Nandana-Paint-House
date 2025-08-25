@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paint Shop</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Paint Shop Billing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Paint Shop Billing</h1>
+
+    <form id="billForm">
+        <label>Customer Name:</label>
+        <input type="text" id="customerName" required><br><br>
+
+        <label>Item:</label>
+        <input type="text" id="item" required>
+        <label>Price:</label>
+        <input type="number" id="price" required>
+        <label>Qty:</label>
+        <input type="number" id="qty" value="1" required>
+        <button type="button" onclick="addItem()">Add</button>
+    </form>
+
+    <h2>Bill Items</h2>
+    <table id="billTable" border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h3>Total: <span id="grandTotal">0</span></h3>
+    <button onclick="saveAndPrintBill()">Save & Print Bill</button>
+
+    <script src="script.js"></script>
+</body>
+
 </html>
