@@ -12,6 +12,7 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, '../frontend/index.html'));
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
