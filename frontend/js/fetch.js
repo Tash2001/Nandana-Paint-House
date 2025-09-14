@@ -1,5 +1,5 @@
 // fetch.js
-const API_BASE = "http://localhost:3001";
+const API_BASE = "http://localhost:3001/api";
 
 // Suppliers GET
 async function getSuppliers() {
@@ -39,7 +39,7 @@ async function getColors() {
 
 // Products GET
 async function getProducts() {
-  const res = await fetch(`${API_BASE}/products`);
+  const res = await fetch(`${API_BASE}/inventory/products`);
   return res.json();
 }
 
@@ -54,4 +54,3 @@ async function getTransaction() {
   const res = await fetch(`${API_BASE}/transactions`);
   return res.json();
 }
-
