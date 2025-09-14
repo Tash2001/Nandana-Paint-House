@@ -1,6 +1,6 @@
 // services/billService.js
 
-const { createBill, getBill } = require("../models/billModel");
+const { createBill, getBill, updateBill } = require("../models/billModel");
 
 const createNewBill = (billData, items, callback) => {
     // Could add validations or calculations here in future
@@ -11,4 +11,9 @@ const getBillById = async (billId) => {
 
     return await getBill(billId);
 };
-module.exports = { createNewBill, getBillById };
+
+const updateBill = async (billId, bill, items) => {
+
+    return await updateBill(billId, bill, items);
+};
+module.exports = { createNewBill, getBillById, updateBill };
