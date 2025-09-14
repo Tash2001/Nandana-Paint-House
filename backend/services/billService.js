@@ -12,8 +12,8 @@ const getBillById = async (billId) => {
     return await getBill(billId);
 };
 
-const updateBill = async (billId, bill, items) => {
+const getupdateBill = async (billId, bill, items) => {
 
     return await updateBill(billId, bill, items);
 };
-module.exports = { createNewBill, getBillById, updateBill };
+module.exports = { createNewBill, getBillById, getupdateBill };
