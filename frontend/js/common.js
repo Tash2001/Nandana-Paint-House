@@ -1,16 +1,4 @@
 //=========================== LIBRARIES ===========================
-const libs = [
-  "../js/libs/jquery.min.js",
-  "../js/libs/datatables.min.js",
-  "../js/libs/bootstrap.bundle.min.js",
-  "../js/fetch.js",
-];
-
-libs.forEach((src) => {
-  const script = document.createElement("script");
-  script.src = src;
-  document.body.appendChild(script);
-});
 
 //=========================== SIDEBAR ============================
 // Load sidebar component dynamically
@@ -36,3 +24,24 @@ fetch(sidebarPath)
   });
 
 //===========================================================================================================================
+
+//=========================================================TOAST NORTIFICATION==================================================================
+
+function showToast(message, type = "info") {
+  const toast = document.createElement("div");
+  toast.className = `alert alert-${type} position-fixed top-0 end-0 m-3`;
+  toast.style.zIndex = 9999;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 3000);
+}
+//===========================================================================================================================
+
+//=========================================================LOADING SCREEN==================================================================
+function showLoading() {
+  document.getElementById("loadingOverlay").style.display = "flex";
+}
+function hideLoading() {
+  document.getElementById("loadingOverlay").style.display = "none";
+}
