@@ -1,5 +1,5 @@
 // controllers/billController.js
-const { createNewBill, getBillById } = require('../services/billService');
+const { createNewBill, getBillById, getupdateBill } = require('../services/billService');
 
 const createBills = (req, res) => {
     const { bill, items } = req.body;
@@ -32,6 +32,21 @@ const printBill = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
-module.exports = { createBills, printBill };
+
+const updateBill = async (req, res) => {
+    try {
+        const billId = req.params.id;
+        const { bill, items } = req.body;
+
+        const updated = await getupdateBill(billId, bill, items);
+
+        res.json({ message: "Bill updated successfully", updated });
+    } catch (err) {
+        console.error("Update Bill Error:", err);
+        res.status(500).json({ error: "Failed to update bill" });
+    }
+};
+
+module.exports = { createBills, printBill, updateBill };
 
 

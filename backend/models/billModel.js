@@ -52,4 +52,49 @@ const getBill = async (billId) => {
     });
   });
 };
-module.exports = { createBill, getBill };
+
+const updateBill = async (billId, bill, items) => {
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      // ✅ Update bills table
+      db.run(
+        `UPDATE bills 
+         SET total_net_amount = ?, discount = ?, total_payable_value = ? 
+         WHERE id = ?`,
+        [bill.total_net_amount, bill.discount, bill.total_payable_value, billId],
+        function (err) {
+          if (err) return reject(err);
+
+          // ✅ Delete old items
+          db.run(`DELETE FROM bill_items WHERE bill_id = ?`, [billId], function (err) {
+            if (err) return reject(err);
+
+            // ✅ Insert new items
+            const stmt = db.prepare(
+              `INSERT INTO bill_items (bill_id, product_id, quantity, item_discount, total) 
+               VALUES (?,?,?,?,?)`
+            );
+
+            items.forEach((item) => {
+              stmt.run([
+                billId,
+                item.product_id,
+                item.quantity,
+                item.item_discount || 0,
+                item.total,
+              ]);
+            });
+
+            stmt.finalize((err) => {
+              if (err) return reject(err);
+              resolve({ billId, ...bill, items });
+            });
+          });
+        }
+      );
+    });
+  });
+};
+
+
+module.exports = { createBill, getBill, updateBill };
